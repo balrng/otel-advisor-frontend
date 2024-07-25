@@ -12,18 +12,10 @@
     <ul>
       <li>
         <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-babel"
+          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-typescript"
           target="_blank"
           rel="noopener"
-          >babel</a
-        >
-      </li>
-      <li>
-        <a
-          href="https://github.com/vuejs/vue-cli/tree/dev/packages/%40vue/cli-plugin-eslint"
-          target="_blank"
-          rel="noopener"
-          >eslint</a
+          >typescript</a
         >
       </li>
     </ul>
@@ -86,13 +78,17 @@
   </div>
 </template>
 
-<script>
-export default {
-  name: "HelloWorld",
+<script lang="ts">
+import { Options, Vue } from "vue-class-component";
+
+@Options({
   props: {
     msg: String,
   },
-};
+})
+export default class HelloWorld extends Vue {
+  msg!: string;
+}
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
