@@ -9,7 +9,6 @@ export const getAllReservations = async (): Promise<ReservationDto[]> => {
     (res: any) =>
       new ReservationDto(
         res.user_id,
-        res.hotel_id,
         new Date(res.check_in_date),
         new Date(res.check_out_date),
         res.budget,
@@ -25,7 +24,6 @@ export const getReservationById = async (
   const res = response.data;
   return new ReservationDto(
     res.user_id,
-    res.hotel_id,
     new Date(res.check_in_date),
     new Date(res.check_out_date),
     res.budget,
@@ -33,14 +31,11 @@ export const getReservationById = async (
   );
 };
 
-export const createReservation = async (
-  dto: ReservationDto,
-): Promise<ReservationDto> => {
+export const createReservation = async (dto: ReservationDto): Promise<ReservationDto> => {
   const response = await axios.post(`${API_BASE_URL}`, dto);
   const res = response.data;
   return new ReservationDto(
     res.user_id,
-    res.hotel_id,
     new Date(res.check_in_date),
     new Date(res.check_out_date),
     res.budget,

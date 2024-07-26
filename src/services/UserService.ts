@@ -15,9 +15,26 @@ export const getUserById = async (id: number): Promise<UserDto> => {
 };
 
 export const createUser = async (dto: UserDto): Promise<UserDto> => {
-  const response = await axios.post(`${API_BASE_URL}`, dto);
-  const user = response.data;
-  return new UserDto(user.name, user.email);
+  try {
+    const response = await axios.post(`${API_BASE_URL}`, dto);
+    console.log('createUser response data:', response.data); // Yanıt verilerini loglayın
+    return response.data;
+  } catch (error: any) {
+    if (axios.isAxiosError(error)) {
+      console.error('Axios error message:', error.message);
+      if (error.response) {
+        console.error('Error response data:', error.response.data);
+        console.error('Error response status:', error.response.status);
+        console.error('Error response headers:', error.response.headers);
+      } else if (error.request) {
+        console.error('Error request data:', error.request);
+      }
+    } else {
+      console.error('Error message:', error.message);
+    }
+    console.error('Error config:', error.config);
+    throw error;
+  }
 };
 
 export const updateUser = async (id: number, dto: UserDto): Promise<void> => {

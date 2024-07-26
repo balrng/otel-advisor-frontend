@@ -8,6 +8,8 @@ import ReservationComponent from "../components/ReservationComponent.vue";
 import UserComponent from "../components/UserComponent.vue";
 import UserPreferenceComponent from "../components/UserPreferenceComponent.vue";
 import UserRecommendationComponent from "../components/UserRecommendationComponent.vue";
+import SearchPage from "@/views/SearchPage.vue";
+import ExperienceSelection from "@/components/ExperienceSelection.vue";
 
 // Diğer bileşenleri import edin
 
@@ -63,6 +65,18 @@ const routes = [
     name: "UserRecommendationComponent",
     component: UserRecommendationComponent,
   },
+
+  {
+    path: "/search-page",
+    name: "SearchPage",
+    component: SearchPage,
+  },
+
+  {
+    path: '/experience-selection',
+    name: 'ExperienceSelection',
+    component: ExperienceSelection,
+  }
 
   
 ];
