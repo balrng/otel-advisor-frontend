@@ -6,9 +6,8 @@
         v-for="userRecommendation in userRecommendations"
         :key="userRecommendation.user_id"
       >
-       Location: {{ userRecommendation.location }} 
-      - Name: {{ userRecommendation.name }} 
-      - Rating:  {{ userRecommendation.rating }}
+        Location: {{ userRecommendation.location }} - Name:
+        {{ userRecommendation.name }} - Rating: {{ userRecommendation.rating }}
       </li>
     </ul>
   </div>

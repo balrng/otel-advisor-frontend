@@ -73,12 +73,10 @@ const routes = [
   },
 
   {
-    path: '/experience-selection',
-    name: 'ExperienceSelection',
+    path: "/experience-selection",
+    name: "ExperienceSelection",
     component: ExperienceSelection,
-  }
-
-  
+  },
 ];
 
 const router = createRouter({

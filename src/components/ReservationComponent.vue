@@ -3,9 +3,10 @@
     <h1>Reservation List</h1>
     <ul>
       <li v-for="reservation in reservations" :key="reservation.user_id">
-        User ID: {{ reservation.user_id }} - Check-in: {{ reservation.check_in_date }} -
-        Check-out: {{ reservation.check_out_date }} - Budget:
-        {{ reservation.budget }} - Region: {{ reservation.region }}
+        User ID: {{ reservation.user_id }} - Check-in:
+        {{ reservation.check_in_date }} - Check-out:
+        {{ reservation.check_out_date }} - Budget: {{ reservation.budget }} -
+        Region: {{ reservation.region }}
       </li>
     </ul>
   </div>
