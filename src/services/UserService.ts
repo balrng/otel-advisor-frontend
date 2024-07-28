@@ -5,13 +5,13 @@ const API_BASE_URL = "https://localhost:7018/api/User";
 
 export const getAllUsers = async (): Promise<UserDto[]> => {
   const response = await axios.get(`${API_BASE_URL}`);
-  return response.data.map((user: any) => new UserDto(user.name, user.email));
+  return response.data.map((user: any) => new UserDto( user.user_id ,user.name, user.email));
 };
 
 export const getUserById = async (id: number): Promise<UserDto> => {
   const response = await axios.get(`${API_BASE_URL}/${id}`);
   const user = response.data;
-  return new UserDto(user.name, user.email);
+  return new UserDto(user.user_id,user.name, user.email);
 };
 
 export const createUser = async (dto: UserDto): Promise<UserDto> => {
