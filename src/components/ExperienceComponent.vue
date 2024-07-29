@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="textalign: Left">Experience List</h1>
+    <h1 style="text-align: Left">Experience List</h1>
     <ejs-grid
       :dataSource="experiences"
       :allowResizing="true"
@@ -16,7 +16,7 @@
     >
       <e-columns>
         <e-column
-          field="id"
+          field="experience_id"
           headerText="ID"
           textAlign="Left"
           isPrimaryKey="true"
@@ -95,7 +95,7 @@ export default class ExperienceComponent extends Vue {
               this.toast.success(`Experience added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateExperience(args.data.id, args.data);
+            await updateExperience(args.data.experience_id, args.data);
             this.toast.success(`Experience updated successfully!`);
           }
 
@@ -103,7 +103,7 @@ export default class ExperienceComponent extends Vue {
         }
         case "delete": {
           const experience = args.data[0];
-          await deleteExperience(experience.id);
+          await deleteExperience(experience.experience_id);
           this.toast.success(`Experience deleted successfully!`);
           break;
         }
