@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="textalign: Left">Hotel Experience List</h1>
+    <h1 style="text-align: left">Hotel Experience List</h1>
     <ejs-grid
       :dataSource="hotelExperiences"
       :allowResizing="true"
@@ -16,22 +16,20 @@
     >
       <e-columns>
         <e-column
-          field="id"
-          headerText="ID"
-          textAlign="Left"
-          isPrimaryKey="true"
-          :visible="false"
-          width="50px"
-        ></e-column>
-        <e-column
           field="hotel_id"
           headerText="Hotel ID"
           textAlign="Left"
+          isPrimaryKey="true"
+          :visible="true"
+          width="50px"
         ></e-column>
         <e-column
           field="experience_id"
           headerText="Experience ID"
           textAlign="Left"
+          isPrimaryKey="true"
+          :visible="true"
+          width="50px"
         ></e-column>
         <e-column
           field="rating"
@@ -98,21 +96,20 @@ export default class HotelExperienceComponent extends Vue {
       switch (args.requestType) {
         case "save": {
           if (args.action === "add") {
-            const addedHotelExperience = await createHotelExperience(args.data);
-            if (addedHotelExperience) {
-              this.hotelExperiences.push(addedHotelExperience);
+            const addedExperience = await createHotelExperience(args.data);
+            if (addedExperience) {
+              this.hotelExperiences.push(addedExperience);
               this.toast.success(`Hotel Experience added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateHotelExperience(args.data.id, args.data);
+            await updateHotelExperience(args.data.hotel_id, args.data.experience_id, args.data);
             this.toast.success(`Hotel Experience updated successfully!`);
           }
-
           break;
         }
         case "delete": {
           const hotelExperience = args.data[0];
-          await deleteHotelExperience(hotelExperience.id);
+          await deleteHotelExperience(hotelExperience.hotel_id, hotelExperience.experience_id);
           this.toast.success(`Hotel Experience deleted successfully!`);
           break;
         }
@@ -120,9 +117,7 @@ export default class HotelExperienceComponent extends Vue {
           break;
       }
     } catch (error: any) {
-      this.toast.error(
-        `Error: ${error?.response?.data?.message || error.message}`,
-      );
+      this.toast.error(`Error: ${error?.response?.data?.message || error.message}`);
       this.hotelExperiences = await getAllHotelExperiences();
     }
   }
