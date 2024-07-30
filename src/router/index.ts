@@ -8,8 +8,8 @@ import ReservationComponent from "../components/ReservationComponent.vue";
 import UserComponent from "../components/UserComponent.vue";
 import UserPreferenceComponent from "../components/UserPreferenceComponent.vue";
 import UserRecommendationComponent from "../components/UserRecommendationComponent.vue";
-import SearchPage from "@/views/SearchPage.vue";
-import ExperienceSelection from "@/components/ExperienceSelection.vue";
+import SearchPage from "@/views/customer/SearchForm.vue";
+import ExperienceSelection from "@/views/customer/ExperienceSelection.vue";
 
 // Diğer bileşenleri import edin
 
