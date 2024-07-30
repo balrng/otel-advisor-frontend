@@ -1,6 +1,6 @@
 <template>
   <div>
-    <h1 style="textalign: Left">Hotel List</h1>
+    <h1 style="text-align: Left">Hotel List</h1>
     <ejs-grid
       :dataSource="hotels"
       :allowResizing="true"
@@ -16,7 +16,7 @@
     >
       <e-columns>
         <e-column
-          field="id"
+          field="hotel_id"
           headerText="ID"
           textAlign="Left"
           isPrimaryKey="true"
@@ -100,7 +100,7 @@ export default class HotelComponent extends Vue {
               this.toast.success(`Hotel added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateHotel(args.data.id, args.data);
+            await updateHotel(args.data.hotel_id, args.data);
             this.toast.success(`Hotel updated successfully!`);
           }
 
@@ -108,7 +108,7 @@ export default class HotelComponent extends Vue {
         }
         case "delete": {
           const hotel = args.data[0];
-          await deleteHotel(hotel.id);
+          await deleteHotel(hotel.hotel_id);
           this.toast.success(`Hotel deleted successfully!`);
           break;
         }
