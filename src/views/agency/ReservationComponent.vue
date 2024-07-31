@@ -17,7 +17,7 @@
     >
       <e-columns>
         <e-column
-          field="id"
+          field="reservation_id"
           headerText="ID"
           textAlign="Left"
           isPrimaryKey="true"
@@ -120,7 +120,7 @@ export default class ReservationComponent extends Vue {
               this.toast.success(`Reservation added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateReservation(args.data.id, args.data);
+            await updateReservation(args.data.reservation_id, args.data);
             this.toast.success(`Reservation updated successfully!`);
           }
 
@@ -128,7 +128,7 @@ export default class ReservationComponent extends Vue {
         }
         case "delete": {
           const reservation = args.data[0];
-          await deleteReservation(reservation.id);
+          await deleteReservation(reservation.reservation_id);
           this.toast.success(`Reservation deleted successfully!`);
           break;
         }
