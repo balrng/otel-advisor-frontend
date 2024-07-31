@@ -55,6 +55,7 @@ export default {
       budget: null,
       checkInDate: "",
       checkOutDate: "",
+      reservation_id:0,
       userId: null,
       locations: [],
       toast: useToast()
@@ -110,6 +111,7 @@ export default {
         // Step 2: Create the reservation with the retrieved user_id
         if (this.userId) {
           const reservationDto = new ReservationDto(
+            this.reservation_id,
             this.userId,
             new Date(this.checkInDate).toISOString(), // Tarih formatı ISO 8601 olmalı
             new Date(this.checkOutDate).toISOString(), // Tarih formatı ISO 8601 olmalı
