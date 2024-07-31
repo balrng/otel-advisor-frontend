@@ -58,6 +58,7 @@ export default class UserComponent extends Vue {
                 }
             } else if (args.action === 'edit') {
                 await updateUser(args.data.user_id, args.data);
+                 this.users = await getAllUsers();
                  this.toast.success(`Succeed!`);
             }
            
