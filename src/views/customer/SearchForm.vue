@@ -1,5 +1,6 @@
 <template>
-  <div class="container">
+  <CustomerLayout>
+    <div class="container">
     <div class="search-form card shadow-sm p-4 mt-5">
       <h2 class="mb-4">EN UYGUN OTELİ BUL</h2>
       <form @submit.prevent="submitForm">
@@ -35,6 +36,7 @@
       </form>
     </div>
   </div>
+  </CustomerLayout>
 </template>
 
 <script>
@@ -44,9 +46,14 @@ import { createReservation } from "../../services/ReservationService";
 import { UserDto } from "../../models/UserDto";
 import { ReservationDto } from "../../models/ReservationDto";
 import { useToast } from "vue-toastification";
+import CustomerLayout from "./CustomerLayout.vue";
 
 export default {
   name: "SearchForm",
+  components: {
+    CustomerLayout,
+  },
+
   data() {
     return {
       name: "",

@@ -10,6 +10,7 @@ import UserPreferenceComponent from "../views/agency/UserPreferenceComponent.vue
 import UserRecommendationComponent from "../views/agency/UserRecommendationComponent.vue";
 import SearchPage from "@/views/customer/SearchForm.vue";
 import ExperienceSelection from "@/views/customer/ExperienceSelection.vue";
+import CustomerHome from "@/views/customer/CustomerHome.vue";
 
 // Diğer bileşenleri import edin
 
@@ -62,13 +63,19 @@ const routes = [
   },
 
   {
-    path: "/search-page",
+    path: "/customer",
+    name: "CustomerHome",
+    component: CustomerHome,
+  },
+
+  {
+    path: "/customer/search-page",
     name: "SearchPage",
     component: SearchPage,
   },
 
   {
-    path: "/experience-selection",
+    path: "/customer/experience-selection",
     name: "ExperienceSelection",
     component: ExperienceSelection,
   },

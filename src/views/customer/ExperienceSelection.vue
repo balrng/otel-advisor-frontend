@@ -1,5 +1,6 @@
 <template>
-  <div class="container mt-5">
+  <CustomerLayout>
+    <div class="container mt-5">
     <div class="card shadow-sm p-4">
       <h2>Otelde Olmasını İstediğin 3 Deneyimi Seç</h2>
       <div class="row">
@@ -30,14 +31,19 @@
       </button>
     </div>
   </div>
+  </CustomerLayout>
 </template>
 
 
 <script>
 import { getAllExperiences } from "../../services/ExperienceService"; // Import experienceService
+import CustomerLayout from "./CustomerLayout.vue";
 
 export default {
   name: "ExperienceSelection",
+  components: {
+    CustomerLayout,
+  },
   data() {
     return {
       experiences: [], // This should be fetched from the API
