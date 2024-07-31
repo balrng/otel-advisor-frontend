@@ -15,8 +15,8 @@
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { HotelDto } from "../models/HotelDto";
-import { getRecommendedHotels } from "../services/UserRecommendationService";
+import { HotelDto } from "../../models/HotelDto";
+import { getRecommendedHotels } from "../../services/UserRecommendationService";
 
 @Options({})
 export default class UserRecommendationComponent extends Vue {

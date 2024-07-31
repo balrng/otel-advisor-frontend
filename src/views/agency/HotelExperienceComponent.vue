@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <h1 style="textalign: Left">Reservation List</h1>
+  <AdminLayout>
+    <div>
+    <h1 style="text-align: left">Hotel Experience List</h1>
     <ejs-grid
-      :dataSource="reservations"
+      :dataSource="hotelExperiences"
       :allowResizing="true"
       :allowSorting="true"
       :allowFiltering="true"
@@ -16,54 +17,42 @@
     >
       <e-columns>
         <e-column
-          field="id"
-          headerText="ID"
+          field="hotel_id"
+          headerText="Hotel ID"
           textAlign="Left"
           isPrimaryKey="true"
-          :visible="false"
+          :visible="true"
           width="50px"
         ></e-column>
         <e-column
-          field="user_id"
-          headerText="User ID"
+          field="experience_id"
+          headerText="Experience ID"
           textAlign="Left"
+          isPrimaryKey="true"
+          :visible="true"
+          width="50px"
         ></e-column>
         <e-column
-          field="check_in_date"
-          headerText="Check-in Date"
-          textAlign="Left"
-          format="yMd"
-        ></e-column>
-        <e-column
-          field="check_out_date"
-          headerText="Check-out Date"
-          textAlign="Left"
-          format="yMd"
-        ></e-column>
-        <e-column
-          field="budget"
-          headerText="Budget"
-          textAlign="Left"
-        ></e-column>
-        <e-column
-          field="region"
-          headerText="Region"
+          field="rating"
+          headerText="Rating"
           textAlign="Left"
         ></e-column>
       </e-columns>
     </ejs-grid>
   </div>
+  </AdminLayout>
+  
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { ReservationDto } from "../models/ReservationDto";
+import { HotelExperienceDto } from "../../models/HotelExperienceDto";
 import {
-  getAllReservations,
-  createReservation,
-  updateReservation,
-  deleteReservation,
-} from "../services/ReservationService";
+  getAllHotelExperiences,
+  createHotelExperience,
+  updateHotelExperience,
+  deleteHotelExperience,
+} from "../../services/HotelExperienceService";
 import {
   GridComponent,
   ColumnsDirective,
@@ -76,23 +65,26 @@ import {
   Resize,
 } from "@syncfusion/ej2-vue-grids";
 import { useToast } from "vue-toastification";
+import AdminLayout from './AdminLayout.vue'; // Correct import path
+
 
 @Options({
   components: {
     "ejs-grid": GridComponent,
     "e-columns": ColumnsDirective,
     "e-column": ColumnDirective,
+    AdminLayout, // Register AdminLayout
   },
   provide: {
     grid: [Resize, Sort, Page, Toolbar, Edit, Filter],
   },
 })
-export default class ReservationComponent extends Vue {
-  reservations: ReservationDto[] = [];
+export default class HotelExperienceComponent extends Vue {
+  hotelExperiences: HotelExperienceDto[] = [];
   initialSort = {
     columns: [
-      { field: "check_in_date", direction: "Ascending" },
-      { field: "check_out_date", direction: "Ascending" },
+      { field: "hotel_id", direction: "Ascending" },
+      { field: "experience_id", direction: "Ascending" },
     ],
   };
   pageSettings = { pageSizes: true, pageSize: 10 };
@@ -102,7 +94,7 @@ export default class ReservationComponent extends Vue {
   toast = useToast();
 
   async mounted() {
-    this.reservations = await getAllReservations();
+    this.hotelExperiences = await getAllHotelExperiences();
   }
 
   async onActionComplete(args: any) {
@@ -110,39 +102,36 @@ export default class ReservationComponent extends Vue {
       switch (args.requestType) {
         case "save": {
           if (args.action === "add") {
-            const addedReservation = await createReservation(args.data);
-            if (addedReservation) {
-              this.reservations.push(addedReservation);
-              this.toast.success(`Reservation added successfully!`);
+            const addedExperience = await createHotelExperience(args.data);
+            if (addedExperience) {
+              this.hotelExperiences.push(addedExperience);
+              this.toast.success(`Hotel Experience added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateReservation(args.data.id, args.data);
-            this.toast.success(`Reservation updated successfully!`);
+            await updateHotelExperience(args.data.hotel_id, args.data.experience_id, args.data);
+            this.toast.success(`Hotel Experience updated successfully!`);
           }
-
           break;
         }
         case "delete": {
-          const reservation = args.data[0];
-          await deleteReservation(reservation.id);
-          this.toast.success(`Reservation deleted successfully!`);
+          const hotelExperience = args.data[0];
+          await deleteHotelExperience(hotelExperience.hotel_id, hotelExperience.experience_id);
+          this.toast.success(`Hotel Experience deleted successfully!`);
           break;
         }
         default:
           break;
       }
     } catch (error: any) {
-      this.toast.error(
-        `Error: ${error?.response?.data?.message || error.message}`,
-      );
-      this.reservations = await getAllReservations();
+      this.toast.error(`Error: ${error?.response?.data?.message || error.message}`);
+      this.hotelExperiences = await getAllHotelExperiences();
     }
   }
 }
 </script>
 
 <style scoped>
-.experience-selection {
+.hotel-experience-selection {
   border: 1px solid black;
   padding: 20px;
 }

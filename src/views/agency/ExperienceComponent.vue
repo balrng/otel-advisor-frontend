@@ -1,48 +1,53 @@
+<!-- views/agency/ExperienceComponent.vue -->
 <template>
-  <div>
-    <h1 style="text-align: Left">Experience List</h1>
-    <ejs-grid
-      :dataSource="experiences"
-      :allowResizing="true"
-      :allowSorting="true"
-      :allowFiltering="true"
-      allowPaging="true"
-      :filterSettings="filterSettings"
-      :editSettings="editSettings"
-      :toolbar="toolbar"
-      :sortSettings="initialSort"
-      :pageSettings="pageSettings"
-      @actionComplete="onActionComplete"
-    >
-      <e-columns>
-        <e-column
-          field="experience_id"
-          headerText="ID"
-          textAlign="Left"
-          isPrimaryKey="true"
-          :visible="false"
-          width="50px"
-        ></e-column>
-        <e-column field="name" headerText="Name" textAlign="Left"></e-column>
-        <e-column
-          field="description"
-          headerText="Description"
-          textAlign="Left"
-        ></e-column>
-      </e-columns>
-    </ejs-grid>
-  </div>
+  <AdminLayout>
+    <template v-slot>
+      <div>
+        <h1 style="text-align: left">Experience List</h1>
+        <ejs-grid
+          :dataSource="experiences"
+          :allowResizing="true"
+          :allowSorting="true"
+          :allowFiltering="true"
+          allowPaging="true"
+          :filterSettings="filterSettings"
+          :editSettings="editSettings"
+          :toolbar="toolbar"
+          :sortSettings="initialSort"
+          :pageSettings="pageSettings"
+          @actionComplete="onActionComplete"
+        >
+          <e-columns>
+            <e-column
+              field="experience_id"
+              headerText="ID"
+              textAlign="left"
+              isPrimaryKey="true"
+              :visible="false"
+              width="50px"
+            ></e-column>
+            <e-column field="name" headerText="Name" textAlign="left"></e-column>
+            <e-column
+              field="description"
+              headerText="Description"
+              textAlign="left"
+            ></e-column>
+          </e-columns>
+        </ejs-grid>
+      </div>
+    </template>
+  </AdminLayout>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { ExperienceDto } from "../models/ExperienceDto";
+import { ExperienceDto } from "../../models/ExperienceDto";
 import {
   getAllExperiences,
   createExperience,
   updateExperience,
   deleteExperience,
-} from "../services/ExperienceService";
+} from "../../services/ExperienceService";
 import {
   GridComponent,
   ColumnsDirective,
@@ -55,12 +60,14 @@ import {
   Resize,
 } from "@syncfusion/ej2-vue-grids";
 import { useToast } from "vue-toastification";
+import AdminLayout from './AdminLayout.vue'; // Correct import path
 
 @Options({
   components: {
     "ejs-grid": GridComponent,
     "e-columns": ColumnsDirective,
     "e-column": ColumnDirective,
+    AdminLayout, // Register AdminLayout
   },
   provide: {
     grid: [Resize, Sort, Page, Toolbar, Edit, Filter],

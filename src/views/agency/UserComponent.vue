@@ -1,8 +1,9 @@
 <template>
+  <AdminLayout>
   <div>
-    <h1 style="textalign: Left">User Preference List</h1>
+    <h1 style="text-align: Left">User List</h1>
     <ejs-grid
-      :dataSource="userPreferences"
+      :dataSource="users"
       :allowResizing="true"
       :allowSorting="true"
       :allowFiltering="true"
@@ -16,42 +17,30 @@
     >
       <e-columns>
         <e-column
-          field="id"
+          field="user_id"
           headerText="ID"
           textAlign="Left"
           isPrimaryKey="true"
           :visible="false"
           width="50px"
         ></e-column>
-        <e-column
-          field="user_id"
-          headerText="User ID"
-          textAlign="Left"
-        ></e-column>
-        <e-column
-          field="experience_id"
-          headerText="Experience ID"
-          textAlign="Left"
-        ></e-column>
-        <e-column
-          field="priority"
-          headerText="Priority"
-          textAlign="Left"
-        ></e-column>
+        <e-column field="name" headerText="Name" textAlign="Left"></e-column>
+        <e-column field="email" headerText="Email" textAlign="Left"></e-column>
       </e-columns>
     </ejs-grid>
   </div>
+  </AdminLayout>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { UserPreferenceDto } from "../models/UserPreferenceDto";
+import { UserDto } from "../../models/UserDto";
 import {
-  getAllUserPreferences,
-  createUserPreference,
-  updateUserPreference,
-  deleteUserPreference,
-} from "../services/UserPreferenceService";
+  getAllUsers,
+  createUser,
+  updateUser,
+  deleteUser,
+} from "../../services/UserService";
 import {
   GridComponent,
   ColumnsDirective,
@@ -64,23 +53,25 @@ import {
   Resize,
 } from "@syncfusion/ej2-vue-grids";
 import { useToast } from "vue-toastification";
+import AdminLayout from './AdminLayout.vue'; // Correct import path
 
 @Options({
   components: {
     "ejs-grid": GridComponent,
     "e-columns": ColumnsDirective,
     "e-column": ColumnDirective,
+    AdminLayout, // Register AdminLayout
   },
   provide: {
     grid: [Resize, Sort, Page, Toolbar, Edit, Filter],
   },
 })
-export default class UserPreferenceComponent extends Vue {
-  userPreferences: UserPreferenceDto[] = [];
+export default class UserComponent extends Vue {
+  users: UserDto[] = [];
   initialSort = {
     columns: [
-      { field: "user_id", direction: "Ascending" },
-      { field: "experience_id", direction: "Ascending" },
+      { field: "name", direction: "Ascending" },
+      { field: "email", direction: "Ascending" },
     ],
   };
   pageSettings = { pageSizes: true, pageSize: 10 };
@@ -90,7 +81,7 @@ export default class UserPreferenceComponent extends Vue {
   toast = useToast();
 
   async mounted() {
-    this.userPreferences = await getAllUserPreferences();
+    this.users = await getAllUsers();
   }
 
   async onActionComplete(args: any) {
@@ -98,22 +89,22 @@ export default class UserPreferenceComponent extends Vue {
       switch (args.requestType) {
         case "save": {
           if (args.action === "add") {
-            const addedUserPreference = await createUserPreference(args.data);
-            if (addedUserPreference) {
-              this.userPreferences.push(addedUserPreference);
-              this.toast.success(`User Preference added successfully!`);
+            const addedUser = await createUser(args.data);
+            if (addedUser) {
+              this.users.push(addedUser);
+              this.toast.success(`Succeed!`);
             }
           } else if (args.action === "edit") {
-            await updateUserPreference(args.data.id, args.data);
-            this.toast.success(`User Preference updated successfully!`);
+            await updateUser(args.data.user_id, args.data);
+            this.toast.success(`Succeed!`);
           }
 
           break;
         }
         case "delete": {
-          const userPreference = args.data[0];
-          await deleteUserPreference(userPreference.id);
-          this.toast.success(`User Preference deleted successfully!`);
+          const user = args.data[0];
+          await deleteUser(user.user_id);
+          this.toast.success(`Succeed!`);
           break;
         }
         default:
@@ -123,15 +114,8 @@ export default class UserPreferenceComponent extends Vue {
       this.toast.error(
         `Error: ${error?.response?.data?.message || error.message}`,
       );
-      this.userPreferences = await getAllUserPreferences();
+      this.users = await getAllUsers();
     }
   }
 }
 </script>
-
-<style scoped>
-.user-preference-selection {
-  border: 1px solid black;
-  padding: 20px;
-}
-</style>

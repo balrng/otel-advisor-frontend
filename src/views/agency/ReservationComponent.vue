@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <h1 style="text-align: Left">Hotel List</h1>
+  <AdminLayout>
+    <div>
+    <h1 style="text-align: Left">Reservation List</h1>
     <ejs-grid
-      :dataSource="hotels"
+      :dataSource="reservations"
       :allowResizing="true"
       :allowSorting="true"
       :allowFiltering="true"
@@ -16,38 +17,55 @@
     >
       <e-columns>
         <e-column
-          field="hotel_id"
+          field="id"
           headerText="ID"
           textAlign="Left"
           isPrimaryKey="true"
           :visible="false"
           width="50px"
         ></e-column>
-        <e-column field="name" headerText="Name" textAlign="Left"></e-column>
         <e-column
-          field="location"
-          headerText="Location"
+          field="user_id"
+          headerText="User ID"
           textAlign="Left"
         ></e-column>
         <e-column
-          field="rating"
-          headerText="Rating"
+          field="check_in_date"
+          headerText="Check-in Date"
+          textAlign="Left"
+          format="yMd"
+        ></e-column>
+        <e-column
+          field="check_out_date"
+          headerText="Check-out Date"
+          textAlign="Left"
+          format="yMd"
+        ></e-column>
+        <e-column
+          field="budget"
+          headerText="Budget"
+          textAlign="Left"
+        ></e-column>
+        <e-column
+          field="region"
+          headerText="Region"
           textAlign="Left"
         ></e-column>
       </e-columns>
     </ejs-grid>
   </div>
+  </AdminLayout>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { HotelDto } from "../models/HotelDto";
+import { ReservationDto } from "../../models/ReservationDto";
 import {
-  getAllHotels,
-  createHotel,
-  updateHotel,
-  deleteHotel,
-} from "../services/HotelService";
+  getAllReservations,
+  createReservation,
+  updateReservation,
+  deleteReservation,
+} from "../../services/ReservationService";
 import {
   GridComponent,
   ColumnsDirective,
@@ -60,23 +78,25 @@ import {
   Resize,
 } from "@syncfusion/ej2-vue-grids";
 import { useToast } from "vue-toastification";
+import AdminLayout from './AdminLayout.vue'; // Correct import path
 
 @Options({
   components: {
     "ejs-grid": GridComponent,
     "e-columns": ColumnsDirective,
     "e-column": ColumnDirective,
+    AdminLayout, // Register AdminLayout
   },
   provide: {
     grid: [Resize, Sort, Page, Toolbar, Edit, Filter],
   },
 })
-export default class HotelComponent extends Vue {
-  hotels: HotelDto[] = [];
+export default class ReservationComponent extends Vue {
+  reservations: ReservationDto[] = [];
   initialSort = {
     columns: [
-      { field: "name", direction: "Ascending" },
-      { field: "location", direction: "Ascending" },
+      { field: "check_in_date", direction: "Ascending" },
+      { field: "check_out_date", direction: "Ascending" },
     ],
   };
   pageSettings = { pageSizes: true, pageSize: 10 };
@@ -86,7 +106,7 @@ export default class HotelComponent extends Vue {
   toast = useToast();
 
   async mounted() {
-    this.hotels = await getAllHotels();
+    this.reservations = await getAllReservations();
   }
 
   async onActionComplete(args: any) {
@@ -94,22 +114,22 @@ export default class HotelComponent extends Vue {
       switch (args.requestType) {
         case "save": {
           if (args.action === "add") {
-            const addedHotel = await createHotel(args.data);
-            if (addedHotel) {
-              this.hotels.push(addedHotel);
-              this.toast.success(`Hotel added successfully!`);
+            const addedReservation = await createReservation(args.data);
+            if (addedReservation) {
+              this.reservations.push(addedReservation);
+              this.toast.success(`Reservation added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateHotel(args.data.hotel_id, args.data);
-            this.toast.success(`Hotel updated successfully!`);
+            await updateReservation(args.data.id, args.data);
+            this.toast.success(`Reservation updated successfully!`);
           }
 
           break;
         }
         case "delete": {
-          const hotel = args.data[0];
-          await deleteHotel(hotel.hotel_id);
-          this.toast.success(`Hotel deleted successfully!`);
+          const reservation = args.data[0];
+          await deleteReservation(reservation.id);
+          this.toast.success(`Reservation deleted successfully!`);
           break;
         }
         default:
@@ -119,7 +139,7 @@ export default class HotelComponent extends Vue {
       this.toast.error(
         `Error: ${error?.response?.data?.message || error.message}`,
       );
-      this.hotels = await getAllHotels();
+      this.reservations = await getAllReservations();
     }
   }
 }

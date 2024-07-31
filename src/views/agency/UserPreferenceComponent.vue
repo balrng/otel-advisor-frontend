@@ -1,8 +1,9 @@
 <template>
-  <div>
-    <h1 style="text-align: left">Hotel Experience List</h1>
+  <AdminLayout>
+    <div>
+    <h1 style="text-align: Left">User Preference List</h1>
     <ejs-grid
-      :dataSource="hotelExperiences"
+      :dataSource="userPreferences"
       :allowResizing="true"
       :allowSorting="true"
       :allowFiltering="true"
@@ -16,40 +17,43 @@
     >
       <e-columns>
         <e-column
-          field="hotel_id"
-          headerText="Hotel ID"
+          field="id"
+          headerText="ID"
           textAlign="Left"
           isPrimaryKey="true"
-          :visible="true"
+          :visible="false"
           width="50px"
+        ></e-column>
+        <e-column
+          field="user_id"
+          headerText="User ID"
+          textAlign="Left"
         ></e-column>
         <e-column
           field="experience_id"
           headerText="Experience ID"
           textAlign="Left"
-          isPrimaryKey="true"
-          :visible="true"
-          width="50px"
         ></e-column>
         <e-column
-          field="rating"
-          headerText="Rating"
+          field="priority"
+          headerText="Priority"
           textAlign="Left"
         ></e-column>
       </e-columns>
     </ejs-grid>
   </div>
+  </AdminLayout>
 </template>
 
 <script lang="ts">
 import { Options, Vue } from "vue-class-component";
-import { HotelExperienceDto } from "../models/HotelExperienceDto";
+import { UserPreferenceDto } from "../../models/UserPreferenceDto";
 import {
-  getAllHotelExperiences,
-  createHotelExperience,
-  updateHotelExperience,
-  deleteHotelExperience,
-} from "../services/HotelExperienceService";
+  getAllUserPreferences,
+  createUserPreference,
+  updateUserPreference,
+  deleteUserPreference,
+} from "../../services/UserPreferenceService";
 import {
   GridComponent,
   ColumnsDirective,
@@ -62,22 +66,24 @@ import {
   Resize,
 } from "@syncfusion/ej2-vue-grids";
 import { useToast } from "vue-toastification";
+import AdminLayout from './AdminLayout.vue'; // Correct import path
 
 @Options({
   components: {
     "ejs-grid": GridComponent,
     "e-columns": ColumnsDirective,
     "e-column": ColumnDirective,
+    AdminLayout, // Register AdminLayout
   },
   provide: {
     grid: [Resize, Sort, Page, Toolbar, Edit, Filter],
   },
 })
-export default class HotelExperienceComponent extends Vue {
-  hotelExperiences: HotelExperienceDto[] = [];
+export default class UserPreferenceComponent extends Vue {
+  userPreferences: UserPreferenceDto[] = [];
   initialSort = {
     columns: [
-      { field: "hotel_id", direction: "Ascending" },
+      { field: "user_id", direction: "Ascending" },
       { field: "experience_id", direction: "Ascending" },
     ],
   };
@@ -88,7 +94,7 @@ export default class HotelExperienceComponent extends Vue {
   toast = useToast();
 
   async mounted() {
-    this.hotelExperiences = await getAllHotelExperiences();
+    this.userPreferences = await getAllUserPreferences();
   }
 
   async onActionComplete(args: any) {
@@ -96,36 +102,39 @@ export default class HotelExperienceComponent extends Vue {
       switch (args.requestType) {
         case "save": {
           if (args.action === "add") {
-            const addedExperience = await createHotelExperience(args.data);
-            if (addedExperience) {
-              this.hotelExperiences.push(addedExperience);
-              this.toast.success(`Hotel Experience added successfully!`);
+            const addedUserPreference = await createUserPreference(args.data);
+            if (addedUserPreference) {
+              this.userPreferences.push(addedUserPreference);
+              this.toast.success(`User Preference added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateHotelExperience(args.data.hotel_id, args.data.experience_id, args.data);
-            this.toast.success(`Hotel Experience updated successfully!`);
+            await updateUserPreference(args.data.id, args.data);
+            this.toast.success(`User Preference updated successfully!`);
           }
+
           break;
         }
         case "delete": {
-          const hotelExperience = args.data[0];
-          await deleteHotelExperience(hotelExperience.hotel_id, hotelExperience.experience_id);
-          this.toast.success(`Hotel Experience deleted successfully!`);
+          const userPreference = args.data[0];
+          await deleteUserPreference(userPreference.id);
+          this.toast.success(`User Preference deleted successfully!`);
           break;
         }
         default:
           break;
       }
     } catch (error: any) {
-      this.toast.error(`Error: ${error?.response?.data?.message || error.message}`);
-      this.hotelExperiences = await getAllHotelExperiences();
+      this.toast.error(
+        `Error: ${error?.response?.data?.message || error.message}`,
+      );
+      this.userPreferences = await getAllUserPreferences();
     }
   }
 }
 </script>
 
 <style scoped>
-.hotel-experience-selection {
+.user-preference-selection {
   border: 1px solid black;
   padding: 20px;
 }

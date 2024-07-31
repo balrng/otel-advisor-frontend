@@ -1,13 +1,13 @@
 // src/router/index.ts
 import { createRouter, createWebHistory } from "vue-router";
-import HelloWorld from "../components/HelloWorld.vue";
-import ExperienceComponent from "../components/ExperienceComponent.vue";
-import HotelComponent from "../components/HotelComponent.vue";
-import HotelExperienceComponent from "../components/HotelExperienceComponent.vue";
-import ReservationComponent from "../components/ReservationComponent.vue";
-import UserComponent from "../components/UserComponent.vue";
-import UserPreferenceComponent from "../components/UserPreferenceComponent.vue";
-import UserRecommendationComponent from "../components/UserRecommendationComponent.vue";
+import AdminHome from '../views/agency/AdminHome.vue';
+import ExperienceComponent from "../views/agency/ExperienceComponent.vue";
+import HotelComponent from "../views/agency/HotelComponent.vue";
+import HotelExperienceComponent from "../views/agency/HotelExperienceComponent.vue";
+import ReservationComponent from "../views/agency/ReservationComponent.vue";
+import UserComponent from "../views/agency/UserComponent.vue";
+import UserPreferenceComponent from "../views/agency/UserPreferenceComponent.vue";
+import UserRecommendationComponent from "../views/agency/UserRecommendationComponent.vue";
 import SearchPage from "@/views/customer/SearchForm.vue";
 import ExperienceSelection from "@/views/customer/ExperienceSelection.vue";
 
@@ -15,53 +15,48 @@ import ExperienceSelection from "@/views/customer/ExperienceSelection.vue";
 
 const routes = [
   {
-    path: "/",
-    name: "Home",
-    component: UserRecommendationComponent,
+    path: "/admin",
+    name: "AdminHome",
+    component: AdminHome,
   },
   {
-    path: "/hello",
-    name: "HelloWorld",
-    component: HelloWorld,
-  },
-  {
-    path: "/experience",
-    name: "Experience",
+    path: "/admin/experience",
+    name: "ExperienceComponent",
     component: ExperienceComponent,
   },
 
   {
-    path: "/hotelComponent",
+    path: "/admin/hotel",
     name: "HotelComponent",
     component: HotelComponent,
   },
 
   {
-    path: "/HotelExperienceComponent",
+    path: "/admin/HotelExperience",
     name: "HotelExperienceComponent",
     component: HotelExperienceComponent,
   },
 
   {
-    path: "/ReservationComponent",
+    path: "/admin/Reservation",
     name: "ReservationComponent",
     component: ReservationComponent,
   },
 
   {
-    path: "/UserComponent",
+    path: "/admin/User",
     name: "UserComponent",
     component: UserComponent,
   },
 
   {
-    path: "/UserPreferenceComponent",
+    path: "/admin/UserPreference",
     name: "UserPreferenceComponent",
     component: UserPreferenceComponent,
   },
 
   {
-    path: "/UserRecommendationComponent",
+    path: "/admin/UserRecommendation",
     name: "UserRecommendationComponent",
     component: UserRecommendationComponent,
   },
