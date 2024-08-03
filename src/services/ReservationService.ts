@@ -8,11 +8,20 @@ export const getAllReservations = async (): Promise<ReservationDto[]> => {
   return response.data.map(
     (res: any) =>
       new ReservationDto(
+        res.reservation_id,
         res.user_id,
-        new Date(res.check_in_date),
-        new Date(res.check_out_date),
+        res.user_name, 
+        new Date(res.trip_start),
+        new Date(res.trip_end),
         res.budget,
         res.region,
+        res.stay_duration,
+        res.exp_1,
+        res.exp_1_rating,
+        res.exp_2,
+        res.exp_2_rating,
+        res.exp_3,
+        res.exp_3_rating,
       ),
   );
 };
@@ -23,11 +32,20 @@ export const getReservationById = async (
   const response = await axios.get(`${API_BASE_URL}/${id}`);
   const res = response.data;
   return new ReservationDto(
+    res.reservation_id,
     res.user_id,
-    new Date(res.check_in_date),
-    new Date(res.check_out_date),
+    res.user_name, 
+    new Date(res.trip_start),
+    new Date(res.trip_end),
     res.budget,
     res.region,
+    res.stay_duration,
+    res.exp_1,
+    res.exp_1_rating,
+    res.exp_2,
+    res.exp_2_rating,
+    res.exp_3,
+    res.exp_3_rating,
   );
 };
 
@@ -37,11 +55,20 @@ export const createReservation = async (
   const response = await axios.post(`${API_BASE_URL}`, dto);
   const res = response.data;
   return new ReservationDto(
+    res.reservation_id,
     res.user_id,
-    new Date(res.check_in_date),
-    new Date(res.check_out_date),
+    res.user_name, 
+    new Date(res.trip_start),
+    new Date(res.trip_end),
     res.budget,
     res.region,
+    res.stay_duration,
+    res.exp_1,
+    res.exp_1_rating,
+    res.exp_2,
+    res.exp_2_rating,
+    res.exp_3,
+    res.exp_3_rating,
   );
 };
 

@@ -1,21 +1,18 @@
 export class ReservationDto {
-  user_id: number;
-  check_in_date: Date;
-  check_out_date: Date;
-  budget: number;
-  region: string;
-
   constructor(
-    user_id: number,
-    check_in_date: Date,
-    check_out_date: Date,
-    budget: number,
-    region: string,
-  ) {
-    this.user_id = user_id;
-    this.check_in_date = check_in_date;
-    this.check_out_date = check_out_date;
-    this.budget = budget;
-    this.region = region;
-  }
+    public reservation_id: number,
+    public user_id: number,
+    public user_name: string,
+    public trip_start: Date,
+    public trip_end: Date,
+    public budget: number,
+    public region: string,
+    public stay_duration: number,
+    public exp_1: string,
+    public exp_1_rating: number,
+    public exp_2: string,
+    public exp_2_rating: number,
+    public exp_3: string,
+    public exp_3_rating: number,
+  ) {}
 }

@@ -1,59 +1,94 @@
 <template>
   <AdminLayout>
     <div>
-    <h1 style="text-align: Left">Reservation List</h1>
-    <ejs-grid
-      :dataSource="reservations"
-      :allowResizing="true"
-      :allowSorting="true"
-      :allowFiltering="true"
-      allowPaging="true"
-      :filterSettings="filterSettings"
-      :editSettings="editSettings"
-      :toolbar="toolbar"
-      :sortSettings="initialSort"
-      :pageSettings="pageSettings"
-      @actionComplete="onActionComplete"
-    >
-      <e-columns>
-        <e-column
-          field="id"
-          headerText="ID"
-          textAlign="Left"
-          isPrimaryKey="true"
-          :visible="false"
-          width="50px"
-        ></e-column>
-        <e-column
-          field="user_id"
-          headerText="User ID"
-          textAlign="Left"
-        ></e-column>
-        <e-column
-          field="check_in_date"
-          headerText="Check-in Date"
-          textAlign="Left"
-          format="yMd"
-        ></e-column>
-        <e-column
-          field="check_out_date"
-          headerText="Check-out Date"
-          textAlign="Left"
-          format="yMd"
-        ></e-column>
-        <e-column
-          field="budget"
-          headerText="Budget"
-          textAlign="Left"
-        ></e-column>
-        <e-column
-          field="region"
-          headerText="Region"
-          textAlign="Left"
-        ></e-column>
-      </e-columns>
-    </ejs-grid>
-  </div>
+      <h1 style="text-align: Left">Reservation List</h1>
+      <ejs-grid
+        :dataSource="reservations"
+        :allowResizing="true"
+        :allowSorting="true"
+        :allowFiltering="true"
+        allowPaging="true"
+        :filterSettings="filterSettings"
+        :editSettings="editSettings"
+        :toolbar="toolbar"
+        :sortSettings="initialSort"
+        :pageSettings="pageSettings"
+        @actionComplete="onActionComplete"
+      >
+        <e-columns>
+          <e-column
+            field="reservation_id"
+            headerText="ID"
+            textAlign="Left"
+            isPrimaryKey="true"
+            :visible="false"
+            width="50px"
+          ></e-column>
+          <e-column
+            field="user_name"
+            headerText="User Name"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="trip_start"
+            headerText="Trip Start Date"
+            textAlign="Left"
+            format="yMd"
+          ></e-column>
+          <e-column
+            field="trip_end"
+            headerText="Trip End Date"
+            textAlign="Left"
+            format="yMd"
+          ></e-column>
+          <e-column
+            field="budget"
+            headerText="Budget"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="region"
+            headerText="Region"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="stay_duration"
+            headerText="Stay Duration"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="exp_1"
+            headerText="Experience 1"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="exp_1_rating"
+            headerText="Experience 1 Rating"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="exp_2"
+            headerText="Experience 2"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="exp_2_rating"
+            headerText="Experience 2 Rating"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="exp_3"
+            headerText="Experience 3"
+            textAlign="Left"
+          ></e-column>
+          <e-column
+            field="exp_3_rating"
+            headerText="Experience 3 Rating"
+            textAlign="Left"
+          ></e-column>
+        </e-columns>
+      </ejs-grid>
+    </div>
   </AdminLayout>
 </template>
 
@@ -95,8 +130,8 @@ export default class ReservationComponent extends Vue {
   reservations: ReservationDto[] = [];
   initialSort = {
     columns: [
-      { field: "check_in_date", direction: "Ascending" },
-      { field: "check_out_date", direction: "Ascending" },
+      { field: "trip_start", direction: "Ascending" },
+      { field: "trip_end", direction: "Ascending" },
     ],
   };
   pageSettings = { pageSizes: true, pageSize: 10 };
@@ -120,7 +155,7 @@ export default class ReservationComponent extends Vue {
               this.toast.success(`Reservation added successfully!`);
             }
           } else if (args.action === "edit") {
-            await updateReservation(args.data.id, args.data);
+            await updateReservation(args.data.reservation_id, args.data);
             this.toast.success(`Reservation updated successfully!`);
           }
 
@@ -128,7 +163,7 @@ export default class ReservationComponent extends Vue {
         }
         case "delete": {
           const reservation = args.data[0];
-          await deleteReservation(reservation.id);
+          await deleteReservation(reservation.reservation_id);
           this.toast.success(`Reservation deleted successfully!`);
           break;
         }
