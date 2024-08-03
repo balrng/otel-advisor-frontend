@@ -29,9 +29,6 @@
             <router-link class="nav-link" to="/admin/user">User</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/admin/userPreference">User Preference</router-link>
-          </li>
-          <li class="nav-item">
             <router-link class="nav-link" to="/admin/userRecommendation">User Recommendation</router-link>
           </li>
         </ul>
