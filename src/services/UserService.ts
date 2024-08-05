@@ -46,3 +46,11 @@ export const updateUser = async (id: number, dto: UserDto): Promise<void> => {
 export const deleteUser = async (id: number): Promise<void> => {
   await axios.delete(`${API_BASE_URL}/${id}`);
 };
+
+export const getUserByName = async (name: string): Promise<UserDto | null> => {
+  const response = await axios.get(`${API_BASE_URL}?name=${name}`);
+  if (response.data.length > 0) {
+    return new UserDto(response.data[0].user_id, response.data[0].name, response.data[0].email);
+  }
+  return null;
+};
