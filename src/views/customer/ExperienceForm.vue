@@ -30,18 +30,18 @@
           Devam Et
         </button>
       </div>
-
+    
       <div v-if="step === 2" class="card shadow-sm p-4 mt-4">
         <h2>Seçilen Deneyimleri Puanlayın</h2>
-        <div v-for="experience in selectedExperiences" :key="experience.id" class="form-group mb-3">
+        <div v-for="(experience, index) in selectedExperiences" :key="experience.id" class="form-group mb-3">
           <label :for="'rating-' + experience.id">Puanlayın (1-5): {{ experience.name }}</label>
-          <select :id="'rating-' + experience.id" v-model="ratings[experience.id]" class="form-control" required>
+          <select :id="'rating-' + experience.id"   v-model="selectedValues[index]" @change="handleChange(index)"  class="form-control" required>
             <option value="" disabled selected>Seçiniz</option>
             <option v-for="n in 5" :key="n" :value="n">{{ n }}</option>
           </select>
         </div>
         <button 
-          @click="submitRatings" 
+          @click="submitRatings(selectedValues)" 
           class="btn btn-primary w-100 mt-4"
         >
           Gönder
@@ -69,6 +69,7 @@ export default {
       ratings: {},
       userId: null,
       toast: useToast(),
+      selectedValues: [],
     };
   },
   computed: {
@@ -121,10 +122,12 @@ export default {
         this.toast.error("Lütfen 3 deneyim seçin.");
       }
     },
-    async submitRatings() {
+    async submitRatings(selectedValues) {
+      console.log( 'selectedValues', selectedValues)
       try {
         const reservationData = JSON.parse(localStorage.getItem('reservationData'));
-
+       
+        
         if (!reservationData) {
           this.toast.error("Rezervasyon bilgileri bulunamadı.");
           return;
@@ -138,12 +141,14 @@ export default {
           trip_end: new Date(reservationData.trip_end).toISOString(),
           stay_duration: reservationData.stay_duration,
           exp_1: this.selectedExperiences[0].name,
-          exp_1_rating: this.ratings[this.selectedExperiences[0].id] || 0,
+          exp_1_rating: this.selectedValues[0] || 0,
           exp_2: this.selectedExperiences[1].name,
-          exp_2_rating: this.ratings[this.selectedExperiences[1].id] || 0,
+          exp_2_rating: this.selectedValues[1] || 0,
           exp_3: this.selectedExperiences[2].name,
-          exp_3_rating: this.ratings[this.selectedExperiences[2].id] || 0,
+          exp_3_rating: this.selectedValues[2] || 0,
         };
+        //Change from  -> this.ratings[this.selectedExperiences[0].id] || 0 change to -> this.selectedValues[1] || 0,
+        
 
         console.log('Reservation DTO:', reservationDto); // Gönderilen veriyi kontrol et
 
@@ -156,6 +161,10 @@ export default {
         this.toast.error("Rezervasyon ve deneyim bilgileri kaydedilirken hata oluştu.");
       }
     },
+  
+     handleChange(index) { 
+       console.log('Selected value for index', index, 'is', this.selectedValues[index] ,  this.selectedValues);
+     }
   },
 };
 </script>
