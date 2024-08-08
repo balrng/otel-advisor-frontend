@@ -16,6 +16,16 @@ export const getUserById = async (id: number): Promise<UserDto> => {
   return new UserDto(user.user_id, user.name, user.email);
 };
 
+export const getUserIdByName = async (name: string): Promise<number> => {
+  try {
+    const response = await axios.get(`${API_BASE_URL}/getUserByName/${name}`);
+    return response.data;
+  } catch (error: any) {
+    console.error('Error fetching user ID:', error);
+    throw error;
+  }
+};
+
 export const createUser = async (dto: UserDto): Promise<UserDto> => {
   try {
     const response = await axios.post(`${API_BASE_URL}`, dto);

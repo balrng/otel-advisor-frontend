@@ -49,15 +49,13 @@ export const getReservationById = async (
   );
 };
 
-export const createReservation = async (
-  dto: ReservationDto,
-): Promise<ReservationDto> => {
-  const response = await axios.post(`${API_BASE_URL}`, dto);
+export const createReservation = async (dto: ReservationDto): Promise<ReservationDto> => {
+  const response = await axios.post(`${API_BASE_URL}/reservations`, dto);
   const res = response.data;
   return new ReservationDto(
     res.reservation_id,
     res.user_id,
-    res.user_name, 
+    res.user_name,
     new Date(res.trip_start),
     new Date(res.trip_end),
     res.budget,
@@ -71,6 +69,7 @@ export const createReservation = async (
     res.exp_3_rating,
   );
 };
+
 
 export const updateReservation = async (
   id: number,

@@ -26,7 +26,7 @@
 import { Options, Vue } from "vue-class-component";
 import { HotelDto } from "../../models/HotelDto";
 import { getRecommendedHotels } from "../../services/UserRecommendationService";
-import { getUserByName } from "../../services/UserService";
+import { getUserIdByName } from "../../services/UserService";
 import AdminLayout from './AdminLayout.vue';
 
 @Options({
@@ -40,18 +40,14 @@ export default class UserRecommendationComponent extends Vue {
 
   async fetchRecommendations() {
     try {
+      let userId: number;
       if (isNaN(Number(this.identifier))) {
-        const user = await getUserByName(this.identifier);
-        if (user) {
-          this.userRecommendations = await getRecommendedHotels(user.user_id);
-        } else {
-          this.userRecommendations = [];
-          alert("User not found");
-        }
+        userId = await getUserIdByName(this.identifier);
       } else {
-        const user_id = Number(this.identifier);
-        this.userRecommendations = await getRecommendedHotels(user_id);
+        userId = Number(this.identifier);
       }
+      this.userRecommendations = await getRecommendedHotels(userId);
+      console.log("User Recommendations:", this.userRecommendations);
     } catch (error) {
       console.error("Error fetching recommendations:", error);
       alert("Error fetching recommendations");
