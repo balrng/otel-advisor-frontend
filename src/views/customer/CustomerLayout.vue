@@ -14,16 +14,16 @@
             <router-link class="nav-link" to="/customer">Home</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/customer/search-page">Find Your Hotel</router-link>
+            <router-link class="nav-link" to="/customer/user-form">Find Your Hotel</router-link>
           </li>
           <li class="nav-item">
-            <router-link class="nav-link" to="/customer/experience-selection">Experience Selection</router-link>
+            <router-link class="nav-link" to="/customer/experience-form">Experience Selection</router-link>
           </li>
         </ul>
       </div>
     </nav>
     <main class="containerr mt-4x">
-      <slot></slot> <!-- Dinamik olarak içeriği buraya yerleştirir -->
+      <slot></slot> 
     </main>
   </div>
 </template>
@@ -39,13 +39,13 @@ export default defineComponent({
 <style scoped>
 
 .logo {
-  height: 45px; /* Logonun yüksekliğini ayarlayın */
-  width: auto;  /* Genişliği otomatik ayarlayın */
-  margin-right: 10px; /* Metin ile logo arasına boşluk koyun */
+  height: 45px; /* logo height */
+  width: auto;  /*logo width automatically */
+  margin-right: 10px; /*space between text and logo */
 }
 
 .nav-link {
-  font-size: 1.2rem; /* Navbar linklerinin boyutu */
+  font-size: 1.2rem; /*size of navbar links*/
 }
 
 

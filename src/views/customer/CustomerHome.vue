@@ -131,7 +131,7 @@
   .overlay-logo {
     width: 400px; 
     height: auto; 
-    margin-bottom: -60px; /* Metin ile logo arasındaki boşluğu azalt */
+    margin-bottom: -60px; 
   }
   
   .btn {

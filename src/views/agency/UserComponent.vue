@@ -53,14 +53,14 @@ import {
   Resize,
 } from "@syncfusion/ej2-vue-grids";
 import { useToast } from "vue-toastification";
-import AdminLayout from './AdminLayout.vue'; // Correct import path
+import AdminLayout from './AdminLayout.vue'; 
 
 @Options({
   components: {
     "ejs-grid": GridComponent,
     "e-columns": ColumnsDirective,
     "e-column": ColumnDirective,
-    AdminLayout, // Register AdminLayout
+    AdminLayout,
   },
   provide: {
     grid: [Resize, Sort, Page, Toolbar, Edit, Filter],

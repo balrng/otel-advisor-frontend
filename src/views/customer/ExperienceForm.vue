@@ -150,7 +150,7 @@ export default {
         //Change from  -> this.ratings[this.selectedExperiences[0].id] || 0 change to -> this.selectedValues[1] || 0,
         
 
-        console.log('Reservation DTO:', reservationDto); // Gönderilen veriyi kontrol et
+        console.log('Reservation DTO:', reservationDto); 
 
         await axios.post('https://localhost:7018/api/reservation', reservationDto);
 

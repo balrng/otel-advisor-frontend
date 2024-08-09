@@ -47,10 +47,10 @@ export default {
         const userId = userResponse.user_id;
         this.toast.success("Kullanıcı başarıyla oluşturuldu!");
 
-        // Kullanıcı ID'yi localStorage'a yazın
+        // write user_id to localStorage
         localStorage.setItem('userId', userId);
 
-        // Rezervasyon formuna yönlendir
+        // Route to reservation form
         this.$router.push({ name: 'ReservationForm' });
       } catch (error) {
         console.error("Error creating user:", error);

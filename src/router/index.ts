@@ -15,7 +15,7 @@ import ExperienceForm from "@/views/customer/ExperienceForm.vue";
 import ExperienceRating from "@/views/customer/ExperienceRating.vue"; 
 
 
-// Diğer bileşenleri import edin
+// Import components
 
 const routes = [
   {

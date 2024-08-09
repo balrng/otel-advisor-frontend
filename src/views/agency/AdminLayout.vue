@@ -35,7 +35,7 @@
       </div>
     </nav>
     <main class="container mt-4">
-      <slot></slot> <!-- Dinamik olarak içeriği buraya yerleştirir -->
+      <slot></slot> 
     </main>
   </div>
 </template>
@@ -54,9 +54,9 @@ export default defineComponent({
 }
 
 .logo {
-  height: 45px; /* Logonun yüksekliğini ayarlayın */
-  width: 50px;  /* Logonun genişliğini ayarlayın */
-  margin-right: 10px; /* Metin ile logo arasına boşluk koyun */
+  height: 45px; 
+  width: 50px;  
+  margin-right: 10px; 
 }
 
 .nav-link{
